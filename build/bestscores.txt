@@ -1,5 +1,0 @@
-hexagon 16000
-octagon 600
-pentagon 25600
-square 67500
-triangle 98500
