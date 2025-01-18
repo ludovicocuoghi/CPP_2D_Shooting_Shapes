@@ -1,6 +1,6 @@
 heptagon 112700
 hexagon 16000
 octagon 600
-pentagon 25600
+pentagon 74400
 square 24800
 triangle 112700

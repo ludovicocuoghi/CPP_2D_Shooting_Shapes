@@ -4,7 +4,7 @@
 **Shape Wars 2D** is a fast-paced action game where the player controls a randomly generated shape and fights against a variety of enemy shapes. The goal is to survive as long as possible, earn points, and achieve the highest score. The game utilizes **SFML** for graphics and input handling.
 
 
-**Video Demo** [Watch the video demo](https://www.youtube.com/watch?v=6_8RRSwAm2Q)
+**Video Demo** [Watch the video demo](https://www.youtube.com/watch?v=UpD7RW8K5e0)
 
 ## Features
 
