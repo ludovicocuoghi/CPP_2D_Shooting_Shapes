@@ -1,5 +1,5 @@
 heptagon 112700
-hexagon 107600
+hexagon 192900
 octagon 29200
 pentagon 81600
 square 24800
