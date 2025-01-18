@@ -37,7 +37,11 @@ Game::Game()
 
     // Set random player color
     sf::Color PlayerColor = getRandomBrightColor();
+
+    // Set random player number of sides
     int playerShapeSides = getRandom<int>(3, 8);
+
+    // Add Components to player
     player->add<CShape>(playerShapeSides, playerRadius, PlayerColor);
     player->add<CRotation>(0.0f, playerRotationSpeed);
     player->add<CCollision>(playerRadius, true, false);
@@ -73,8 +77,6 @@ void Game::run() {
 }
 
 // Input Handling
-
-bool isMousePressed = false; // Add this in the Game class
 
 void Game::handleInput() {
     sf::Event event;
@@ -129,6 +131,7 @@ void Game::fireBullet(bool isSupermove) {
         worldMousePosition.x - playerTransform.position.x,
         worldMousePosition.y - playerTransform.position.y
     );
+
     // Define bullet speed based on the type (supermove or normal)
     float speed = isSupermove ? superBulletSpeed : bulletSpeed; // Supermove: faster, Normal: slower
 
@@ -138,12 +141,13 @@ void Game::fireBullet(bool isSupermove) {
         playerTransform.position, // Spawn bullet at player's position
         direction * speed         // Apply the fixed speed multiplier
     );
+
     bullet->add<CShape>(
-        20,                          // Circular shape
-        playerRadius / 6.0f,         // Radius is ¼ of the player's radius
-        isSupermove ? sf::Color::Red : sf::Color::White // Color based on type
+        20,                          // Use high number of sides to approximate circular shape
+        playerRadius / 6.0f,         // Use smaller radius for bullets
+        isSupermove ? sf::Color::Red : sf::Color::White // Color based on type (super or not)
     );
-    bullet->add<CLifeSpan>(bulletLifeTime);  // Bullets live for 1 second
+    bullet->add<CLifeSpan>(bulletLifeTime);  // Bullets live for bulletLifeTime second
 
     // Reset bullet cooldown timer for normal bullets
     if (!isSupermove) {
@@ -178,11 +182,11 @@ void Game::activateSupermove() {
             direction * 500.0f        // Fixed bullet speed for supermove
         );
         bullet->add<CShape>(
-            20,                          // Circular shape
-            playerRadius / 2.0f,         // Radius is ¼ of the player's radius
+            20,                          
+            playerRadius / 2.0f,         
             sf::Color::Red               // Red color for supermove bullets
         );
-        bullet->add<CLifeSpan>(1.0f);     // Bullets live for 1 second
+        bullet->add<CLifeSpan>(bulletLifeTime);
     }
 
     // Set supermove on cooldown
@@ -290,7 +294,6 @@ void Game::updateFragments(float dt) {
         rotation.angle += rotation.speed * dt; // Increment rotation angle
         if (rotation.angle >= 360.0f) rotation.angle -= 360.0f; // Wrap within [0, 360)
 
-
         // Decrease lifespan
         lifespan.remainingTime -= dt;
 
@@ -324,7 +327,7 @@ void Game::updateCollisions() {
             auto& spawnTime = enemy->get<CSpawnTime>();
 
             // Skip collision if the enemy has just spawned
-            if (spawnTime.timeSinceSpawn < 1.0f) {
+            if (spawnTime.timeSinceSpawn < spawnProtectionTime) {
                 continue;
             }
 
@@ -354,7 +357,7 @@ void Game::updateCollisions() {
                     static_cast<float>(window.getSize().y) / 2.0f
                 };
                 playerState.isInvincible = true; // Make the player invincible
-                playerState.invincibilityTimer = 3.0f; // Set invincibility duration
+                playerState.invincibilityTimer = playerInvincibilityTime; // Set invincibility duration
             }
         }
     }
@@ -500,7 +503,6 @@ void Game::render() {
 
             // Blinking logic: Alternate visibility during invincibility
             auto& playerState = entity->get<CState>();
-            // Blinking logic: Alternate visibility during invincibility
             bool renderPlayer = true; // Default: always render
             if (playerState.isInvincible) {
                 [[maybe_unused]] int blinkInterval = 200; // Milliseconds
@@ -512,7 +514,7 @@ void Game::render() {
             if (renderPlayer) {
 
                 sf::CircleShape circle(shape.radius);
-                circle.setOrigin(shape.radius, shape.radius);       // Inner circle with smaller radius
+                circle.setOrigin(shape.radius, shape.radius);       
                 circle.setFillColor(sf::Color::Black);            // Black fill
                 circle.setOutlineThickness(1.0f);                 // Thin outline for the inner circle
                 circle.setOutlineColor(shape.color);         // White outline
@@ -523,9 +525,9 @@ void Game::render() {
                 // Render the outer shape
                 sf::CircleShape polygon(shape.radius, shape.sides); // Set radius and sides
 
-                polygon.setOrigin(shape.radius, shape.radius);    // Black fill
-                polygon.setOutlineThickness(1.0f);                // White outline
-                polygon.setOutlineColor(sf::Color::White);        // Set outline color
+                polygon.setOrigin(shape.radius, shape.radius);    
+                polygon.setOutlineThickness(1.0f);                
+                polygon.setOutlineColor(sf::Color::White);
                 polygon.setRotation(rotation.angle); 
                 polygon.setPosition(transform.position.x,
                                     transform.position.y);
@@ -539,10 +541,10 @@ void Game::render() {
             auto& rotation = entity->get<CRotation>();
 
             sf::CircleShape polygon(shape.radius, shape.sides);
-            polygon.setOrigin(shape.radius, shape.radius);       // Set radius and sides
-            polygon.setFillColor(sf::Color::Black);            // Black fill
-            polygon.setOutlineThickness(2.0f);                // Outline thickness
-            polygon.setOutlineColor(shape.color);             // Set color
+            polygon.setOrigin(shape.radius, shape.radius);      
+            polygon.setFillColor(sf::Color::Black);            
+            polygon.setOutlineThickness(4.0f);                
+            polygon.setOutlineColor(shape.color);            
             polygon.setRotation(rotation.angle); 
             polygon.setPosition(transform.position.x, 
                                 transform.position.y); // Adjust for origin
@@ -559,7 +561,7 @@ void Game::render() {
             sf::CircleShape fragmentShape(shape.radius, shape.sides); // Same shape type as enemy
             fragmentShape.setOrigin(shape.radius, shape.radius);
             fragmentShape.setFillColor(sf::Color::Transparent); // Transparent fill
-            fragmentShape.setOutlineThickness(2.0f);
+            fragmentShape.setOutlineThickness(3.0f);
             fragmentShape.setRotation(rotation.angle); 
             fragmentShape.setOutlineColor(shape.color);
             fragmentShape.setPosition(transform.position.x, transform.position.y);
@@ -607,7 +609,7 @@ void Game::render() {
 
     // Draw Game Over message if the game is over
    if (gameState == GameState::GameOver) {
-        window.draw(gameOverText); // Draw the "Game Over" message
+        window.draw(gameOverText);
     }
     window.display();
 }
@@ -626,15 +628,15 @@ void Game::initializeHUD() {
 
     // Initialize lives text
     livesText.setFont(font);
-    livesText.setCharacterSize(20); // Font size
-    livesText.setFillColor(sf::Color::White); // Font color
+    livesText.setCharacterSize(20); 
+    livesText.setFillColor(sf::Color::White); 
     livesText.setPosition(10, window.getSize().y - 40); // Bottom left position
     livesText.setString("Lives Remaining: " + std::to_string(playerLives));
 
     // Initialize points text
     pointsText.setFont(font);
-    pointsText.setCharacterSize(20); // Font size
-    pointsText.setFillColor(sf::Color::White); // Font color
+    pointsText.setCharacterSize(20);
+    pointsText.setFillColor(sf::Color::White); 
     pointsText.setPosition(10, 10); // Top left position
     pointsText.setString("Points: " + std::to_string(totalPoints));
 
@@ -675,9 +677,9 @@ void Game::updateHUD() {
 }
 
 void Game::initializeGameOverText() {
-    gameOverText.setFont(font); // Use the same font as the HUD
+    gameOverText.setFont(font);
     gameOverText.setCharacterSize(50); // Large font size for the message
-    gameOverText.setFillColor(sf::Color::Red); // Red color
+    gameOverText.setFillColor(sf::Color::Red); 
     gameOverText.setString("Game Over"); // Text content
 
     // Center the text in the middle of the screen
@@ -711,7 +713,6 @@ void Game::spawnEnemies(float dt) {
 
             // Add the spawn time component
             enemy->add<CSpawnTime>();
-
             enemySpawnTimer = 0.0f;
         }
     }

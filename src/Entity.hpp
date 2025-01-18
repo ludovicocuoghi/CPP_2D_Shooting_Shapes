@@ -4,8 +4,8 @@
 
 // Alias for the tuple that holds all possible components an entity can have
 using ComponentTuple = std::tuple<
-    CTransform, CLifeSpan, CLives, CInput, CBoundingBox, 
-    CAnimation, CGravity, CShape, CAI, CRotation, CCollision, CState, CBullet, CSpawnTime
+    CTransform, CLifeSpan, CLives, CInput, CShape,
+    CRotation, CCollision, CState, CBullet, CSpawnTime
 >;
 
 // Entity class: Represents an object in the game world with components and metadata

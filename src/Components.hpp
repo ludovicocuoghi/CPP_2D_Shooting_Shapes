@@ -16,14 +16,6 @@ struct CTransform {
         : position(pos), velocity(vel), scale(scl) {}
 };
 
-// Bounding Box component: defines a rectangle for collision detection
-struct CBoundingBox {
-    float width;  // Width of the bounding box
-    float height; // Height of the bounding box
-
-    CBoundingBox(float w = 0.0f, float h = 0.0f) : width(w), height(h) {}
-};
-
 struct CShape {
     int sides = 0;
     float radius = 0.0f;
@@ -48,12 +40,6 @@ struct CRotation {
         : angle(initAngle), speed(rotationSpeed) {}
 };
 
-struct CAI {
-    std::string behavior = "random"; // Currently, only "random" behavior is supported
-
-    CAI(const std::string& behaviorType = "random") : behavior(behaviorType) {}
-};
-
 // Time-based lifespan: how long an entity stays alive in seconds
 struct CLifeSpan {
     float remainingTime; // Remaining time (in seconds)
@@ -71,7 +57,7 @@ struct CSpawnTime {
 // Count-based lives: for entities like players
 struct CLives {
     int remaining;
-    int total;       // Number of lives remaining
+    int total;     
 
     CLives(int lives = 0) : remaining(lives), total(lives) {}
 };
@@ -84,24 +70,6 @@ struct CInput {
     bool right = false;
 
     CInput() = default;
-};
-
-// Animation component: manages animation state
-struct CAnimation {
-    std::string textureID; // ID for the texture
-    int frame = 0;         // Current animation frame
-    int frameCount = 0;    // Total number of frames
-    int frameSpeed = 0;    // Frame speed (frames per second)
-
-    CAnimation(const std::string& texID = "", int frm = 0, int count = 0, int speed = 0)
-        : textureID(texID), frame(frm), frameCount(count), frameSpeed(speed) {}
-};
-
-// Gravity component: applies gravitational force
-struct CGravity {
-    Vec2<float> force = {0.0f, 0.0f}; // Gravity force
-
-    CGravity(const Vec2<float>& grav = {0.0f, 9.8f}) : force(grav) {}
 };
 
 struct CCollision {
