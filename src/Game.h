@@ -64,7 +64,7 @@ private:
     float playerRadius = 45.0f;         // Radius for player collision
     float playerRotationSpeed = 360.0f; // Player rotation speed (degrees per second)
     int playerLives = 3;                // Initial number of lives
-    float playerInvincibilityTime = 2.0f;     // Player is invincible after spawing to avoid death on spawn
+    float playerInvincibilityTime = 3.0f;     // Player is invincible after spawing to avoid death on spawn
 
     // === Enemy Attributes ===
     float enemySpawnTimer = 0.0f;       // Tracks time for spawning enemies

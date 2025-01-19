@@ -186,7 +186,7 @@ void Game::activateSupermove() {
             playerRadius / 2.0f,         
             sf::Color::Red               // Red color for supermove bullets
         );
-        bullet->add<CLifeSpan>(bulletLifeTime);
+        bullet->add<CLifeSpan>(bulletLifeTime * 1.5); //Make the super bullets last longer than normal bullets
     }
 
     // Set supermove on cooldown
@@ -345,8 +345,10 @@ void Game::updateCollisions() {
                     continue;
                 }
 
-                // Reduce lives and make the player invincible
-                playerLives--; // Decrease lives
+                // Reduce lives
+                playerLives--;
+
+                //If Lives <=0 
                 if (playerLives <= 0) {
                     handlePlayerDeath(totalPoints, playerShape.sides);
                 }
@@ -399,14 +401,17 @@ void Game::updateCollisions() {
                 transform2.velocity.y = -transform2.velocity.y * 1.3f;
             } else {
                 // Reset velocity to original speed when not in collision
-                if (std::abs(transform1.velocity.x) > enemySpeed || std::abs(transform1.velocity.y) > enemySpeed) {
-                    transform1.velocity.x = (transform1.velocity.x > 0 ? 1 : -1) * enemySpeed;
-                    transform1.velocity.y = (transform1.velocity.y > 0 ? 1 : -1) * enemySpeed;
+                // Normalize and scale velocity to ensure consistent speed
+                float magnitude1 = std::sqrt(transform1.velocity.x * transform1.velocity.x + transform1.velocity.y * transform1.velocity.y);
+                if (magnitude1 > 0) {
+                    transform1.velocity.x = (transform1.velocity.x / magnitude1) * enemySpeed;
+                    transform1.velocity.y = (transform1.velocity.y / magnitude1) * enemySpeed;
                 }
 
-                if (std::abs(transform2.velocity.x) > enemySpeed || std::abs(transform2.velocity.y) > enemySpeed) {
-                    transform2.velocity.x = (transform2.velocity.x > 0 ? 1 : -1) * enemySpeed;
-                    transform2.velocity.y = (transform2.velocity.y > 0 ? 1 : -1) * enemySpeed;
+                float magnitude2 = std::sqrt(transform2.velocity.x * transform2.velocity.x + transform2.velocity.y * transform2.velocity.y);
+                if (magnitude2 > 0) {
+                    transform2.velocity.x = (transform2.velocity.x / magnitude2) * enemySpeed;
+                    transform2.velocity.y = (transform2.velocity.y / magnitude2) * enemySpeed;
                 }
             }
         }
