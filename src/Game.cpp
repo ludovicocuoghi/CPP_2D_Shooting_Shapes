@@ -760,46 +760,6 @@ void Game::explodeEnemy(std::shared_ptr<Entity> enemy) {
 
 // Game-Specific Logic
 
-void Game::processPlayerMovement(float dt) {
-    for (auto& entity : entityManager.getEntities("player")) {
-        auto& transform = entity->get<CTransform>();
-        auto& input = entity->get<CInput>();
-        auto& rotation = entity->get<CRotation>();
-        auto& shape = entity->get<CShape>();
-
-        // Calculate intended velocity based on input
-        Vec2<float> intendedVelocity(0.0f, 0.0f);
-        if (input.up) intendedVelocity.y -= playerSpeed;
-        if (input.down) intendedVelocity.y += playerSpeed;
-        if (input.left) intendedVelocity.x -= playerSpeed;
-        if (input.right) intendedVelocity.x += playerSpeed;
-
-        // Predict next position
-        Vec2<float> nextPosition = transform.position + intendedVelocity * dt;
-
-        // Check boundaries for the next position
-        if (nextPosition.x - shape.radius < 0) {
-            nextPosition.x = shape.radius; // Stop at the left boundary
-        } else if (nextPosition.x + shape.radius > window.getSize().x) {
-            nextPosition.x = window.getSize().x - shape.radius; // Stop at the right boundary
-        }
-
-        if (nextPosition.y - shape.radius < 0) {
-            nextPosition.y = shape.radius; // Stop at the top boundary
-        } else if (nextPosition.y + shape.radius > window.getSize().y) {
-            nextPosition.y = window.getSize().y - shape.radius; // Stop at the bottom boundary
-        }
-
-        // Update position and velocity
-        transform.position = nextPosition;
-        transform.velocity = intendedVelocity;
-
-        // Update rotation
-        rotation.angle += rotation.speed * dt; // Increment rotation angle
-        if (rotation.angle >= 360.0f) rotation.angle -= 360.0f; // Wrap within [0, 360)
-    }
-}
-
 void Game::processEnemyMovement(float dt) {
     for (auto& entity : entityManager.getEntities("enemy")) {
         auto& transform = entity->get<CTransform>();

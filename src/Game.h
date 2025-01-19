@@ -37,8 +37,6 @@ private:
     void updateFragments(float dt);           // Updates fragment entities
     void updateCollisions();                  // Handles all collisions in the game
 
-    void updatePlayer(float dt);              // Updates player-specific logic
-
     // === Rendering ===
     void render();                 // Draws everything to the screen
     void initializeHUD();          // Sets up HUD elements
@@ -52,7 +50,7 @@ private:
     void explodeEnemy(std::shared_ptr<Entity> enemy); // Handles enemy destruction visuals
 
     // === Game Logic ===
-    void processPlayerMovement(float dt); // Handles player movement logic
+    void updatePlayer(float dt); // Handles player movement logic
     void processEnemyMovement(float dt);  // Handles enemy movement logic
 
     // === Core Components ===
