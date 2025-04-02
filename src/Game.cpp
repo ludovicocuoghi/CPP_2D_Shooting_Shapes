@@ -132,20 +132,17 @@ void Game::fireBullet(bool isSupermove) {
         worldMousePosition.y - playerTransform.position.y
     );
 
-    // Define bullet speed based on the type (supermove or normal)
-    float speed = isSupermove ? superBulletSpeed : bulletSpeed; // Supermove: faster, Normal: slower
-
     // Create a bullet entity
     auto bullet = entityManager.addEntity("bullet");
     bullet->add<CTransform>(
         playerTransform.position, // Spawn bullet at player's position
-        direction * speed         // Apply the fixed speed multiplier
+        direction * bulletSpeed         // Apply the fixed speed multiplier
     );
 
     bullet->add<CShape>(
         20,                          // Use high number of sides to approximate circular shape
         playerRadius / 6.0f,         // Use smaller radius for bullets
-        isSupermove ? sf::Color::Red : sf::Color::White // Color based on type (super or not)
+        sf::Color::White // Color based on type (super or not)
     );
     bullet->add<CLifeSpan>(bulletLifeTime);  // Bullets live for bulletLifeTime second
 

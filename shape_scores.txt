@@ -3,4 +3,4 @@ hexagon 192900
 octagon 29200
 pentagon 81600
 square 24800
-triangle 112700
+triangle 130500

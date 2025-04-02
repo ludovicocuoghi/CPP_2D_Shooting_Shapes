@@ -35,7 +35,15 @@ private:
     void updateSupermoveCooldown(float dt);   // Manages supermove cooldown
     void updateBullets(float dt);             // Updates active bullets
     void updateFragments(float dt);           // Updates fragment entities
-    void updateCollisions();                  // Handles all collisions in the game
+    void updateCollisions();                    // Handles all collisions in the game
+    void createBullet(
+        const Vec2<float>& position, // Starting position of the bullet
+        const Vec2<float>& velocity,
+        float speed, // Normalized velocity vector scaled by speed
+        float lifespan,              // Lifespan of the bullet in seconds
+        const sf::Color& color,      // Color of the bullet
+        float radius
+    );                 
 
     // === Rendering ===
     void render();                 // Draws everything to the screen
