@@ -35,17 +35,23 @@ SFML がインストールされ、プロジェクトに正しくリンクされ
 
 ### リポジトリをクローン
 
+```
 git clone https://github.com/ludovicocuoghi/CPP_2D_Shooting_Shapes.git
 cd CPP_2D_Shooting_Shapes
+```
 
 ### プロジェクトのビルド
 
+```
 make
 ./Shape_Wars_2d_project
+```
 
 ##　ゲームの実行
 
+```
 .bin/sfml_app
+```
 
 ## ゲーム操作
 
