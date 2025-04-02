@@ -33,8 +33,6 @@
 
 SFML がインストールされ、プロジェクトに正しくリンクされている必要があります。
 
-macOS の場合、Homebrew でインストール可能です：
-
 ### リポジトリをクローン
 
 git clone https://github.com/ludovicocuoghi/CPP_2D_Shooting_Shapes.git
@@ -100,8 +98,6 @@ make
 ### Prerequisites
 
 SFML must be installed and properly linked to the project.
-
-For macOS, you can install it with Homebrew:
 
 ### Clone the Repository
 
