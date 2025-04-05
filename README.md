@@ -43,11 +43,11 @@ cd CPP_2D_Shooting_Shapes
 ### プロジェクトのビルド
 
 ```
+make clean
 make
-./bin/sfml_app
 ```
 
-##　ゲームの実行
+###　ゲームの実行
 
 ```
 .bin/sfml_app
