@@ -1,8 +1,8 @@
-# Shape Wars 2D ゲーム
+# Shooting Shapes 2D ゲーム
 
 (English is Below)
 
-**Shape Wars 2D** は、プレイヤーがランダムに生成された図形を操作し、さまざまな敵の図形と戦う、スピード感のあるアクションゲームです。目標はできるだけ長く生き延びてポイントを稼ぎ、最高スコアを目指すことです。グラフィック描画や入力処理には **SFML** を使用しています。
+**Shooting Shapes** は、プレイヤーがランダムに生成された図形を操作し、さまざまな敵の図形と戦う、スピード感のあるアクションゲームです。目標はできるだけ長く生き延びてポイントを稼ぎ、最高スコアを目指すことです。グラフィック描画や入力処理には **SFML** を使用しています。
 
 **ビデオデモ**：[デモ動画を見る](https://www.youtube.com/watch?v=sr0TglMLr-w)
 
@@ -44,7 +44,7 @@ cd CPP_2D_Shooting_Shapes
 
 ```
 make
-./Shape_Wars_2d_project
+./bin/sfml_app
 ```
 
 ##　ゲームの実行
@@ -72,9 +72,9 @@ make
 貢献する際は、Issue を立てるか、Pull Request を送信してください。
 
 
-# Shape Wars 2D Game
+# Shooting Shapes 2D Game
 
-**Shape Wars 2D** is a fast-paced action game where players control randomly generated shapes and battle against various enemy shapes. The goal is to survive as long as possible, earn points, and aim for the highest score. The game uses **SFML** for graphics rendering and input processing.
+**Shooting Shapes 2D** is a fast-paced action game where players control randomly generated shapes and battle against various enemy shapes. The goal is to survive as long as possible, earn points, and aim for the highest score. The game uses **SFML** for graphics rendering and input processing.
 
 **Video Demo**: [Watch Demo Video](https://www.youtube.com/watch?v=sr0TglMLr-w)
 
@@ -116,7 +116,7 @@ cd CPP_2D_Shooting_Shapes
 
 ```
 make
-./Shape_Wars_2d_project
+./bin/sfml_app
 ```
 
 ## Running the Game
