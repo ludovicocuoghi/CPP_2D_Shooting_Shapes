@@ -115,11 +115,11 @@ cd CPP_2D_Shooting_Shapes
 ### Build the Project
 
 ```
+make clean
 make
-./bin/sfml_app
 ```
 
-## Running the Game
+### Running the Game
 
 ```
 .bin/sfml_app
